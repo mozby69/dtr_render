@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-k+2o1e6n3%f(yy&9&p9opd_)@#w714p!d^nsu5vh4!iie2j8!)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['webapp2-akkf.onrender.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -48,6 +48,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'myproject.urls'
@@ -118,14 +119,17 @@ USE_TZ = True
 
 # STATIC_URL = 'static/'
 
-STATIC_URL = '/static/'
-
+STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
-
+   os.path.join(BASE_DIR, "static")
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+
+
+# STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
