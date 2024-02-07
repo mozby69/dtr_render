@@ -22,10 +22,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-k+2o1e6n3%f(yy&9&p9opd_)@#w714p!d^nsu5vh4!iie2j8!)'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+DEBUG = os.environ.get('DEBUG', 'True') == "True"
+# DEBUG = True
+
+ALLOWED_HOSTS = ['localohst','127.0.0.1','webapp2-akkf.onrender.com']
 
 
 # Application definition
@@ -75,13 +76,23 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if not DEBUG:
+    DATABASE = {
+    "default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
     }
-}
 
+else:
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'djangodb2',
+            'USER': 'root',
+            'PASSWORD': '',
+            'HOST':'127.0.0.1',
+            'PORT': '3306',
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -119,14 +130,15 @@ USE_TZ = True
 
 # STATIC_URL = 'static/'
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [
    os.path.join(BASE_DIR, "static")
 ]
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
