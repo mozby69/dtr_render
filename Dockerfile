@@ -22,8 +22,7 @@ RUN pip3 install -r requirements.txt
 # Copy your project files
 COPY . .
 
-# Run Django server
-CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
-
+# Run Django with Gunicorn
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "myproject.wsgi"]
 
 
