@@ -2,11 +2,10 @@ asgiref==3.7.2
 colorama==0.4.6
 dj-database-url==2.1.0
 Django==4.2.7
-mysqlclient==2.2.3
 numpy==1.26.4
 opencv-python==4.9.0.80
 pillow==10.2.0
-psycopg2==2.9.9
+psycopg2-binary==2.9.9
 pypng==0.20220715.0
 pyzbar==0.1.9
 qrcode==7.4.2

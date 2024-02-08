@@ -1,10 +1,29 @@
-FROM python:3.11.6
+FROM python:3.11-slim-buster
 
+RUN apt-get update
+# Install opencv-python
+RUN apt-get install -y libgl1-mesa-glx libglib2.0-0 libzbar-dev && \
+    rm -rf /var/lib/apt/lists/*
+
+# Optional: Use a different mirror (replace with your preferred mirror)
+# RUN echo 'deb http://us.archive.ubuntu.com/ubuntu focal main restricted universe multiverse' >> /etc/apt/sources.list
+
+# Update repositories
+
+# Set working directory
 WORKDIR /app
 
+# Copy requirements file
 COPY requirements.txt requirements.txt
+
+# Install Python dependencies
 RUN pip3 install -r requirements.txt
 
-COPY . .	
+# Copy your project files
+COPY . .
 
-CMD [ "python3", "manage.py", "runserver", "0.0.0.0:8000"]
+# Run Django server
+CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
+
+
+
