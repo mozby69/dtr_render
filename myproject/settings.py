@@ -24,8 +24,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-k+2o1e6n3%f(yy&9&p9opd_)@#w714p!d^nsu5vh4!iie2j8!)'
 
 
-DEBUG = os.environ.get('DEBUG', 'True') == "True"
-# DEBUG = True
+#DEBUG = os.environ.get('DEBUG', 'True') == "True"
+DEBUG = False
 
 ALLOWED_HOSTS = ['localhost','127.0.0.1','webapp2-akkf.onrender.com']
 
