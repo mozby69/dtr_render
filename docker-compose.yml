@@ -1,4 +1,4 @@
-version: "3.9"
+version: "25.0.2"
 services:
   app:
     build: .
@@ -10,10 +10,4 @@ services:
     container_name: django_container
     command: python manage.py runserver 0.0.0.0:8000
 
-  db:
-    image: postgres:latest
-    container_name: postgres_container
-    environment:
-      POSTGRES_DB: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: saitama123
+
