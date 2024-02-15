@@ -27,7 +27,7 @@ DEBUG = True
 
 # DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','127.0.0.1','webapp2-akkf.onrender.com']
+ALLOWED_HOSTS = ['localhost','127.0.0.1','dtr-qrscanner.onrender.com']
 
 
 # Application definition
