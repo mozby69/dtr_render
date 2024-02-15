@@ -1,14 +1,16 @@
 FROM python:3.11-slim-buster
 
+
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+
 RUN apt-get update
-# Install opencv-python
+
 RUN apt-get install -y libgl1-mesa-glx libglib2.0-0 libzbar-dev && \
     rm -rf /var/lib/apt/lists/*
 
-# Optional: Use a different mirror (replace with your preferred mirror)
-# RUN echo 'deb http://us.archive.ubuntu.com/ubuntu focal main restricted universe multiverse' >> /etc/apt/sources.list
 
-# Update repositories
 
 # Set working directory
 WORKDIR /app
