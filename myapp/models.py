@@ -55,7 +55,7 @@ class Employee(models.Model):
     Firstname = models.CharField(max_length=20)
     Middlename = models.CharField(max_length=20)
     Lastname = models.CharField(max_length=20)
-    DateofBirth = models.DateField(default=date(2000, 1, 1))
+    DateofBirth = models.DateField(default=date(2000, 1, 1), null=True)
     BloodType = models.CharField(max_length=3, default="N/D")
     Gender = models.CharField(max_length=8, default="Male")
     CivilStatus = models.CharField(max_length=10, default="N/A")

@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
-import dj_database_url
 # import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -85,18 +84,23 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 # }
 
 
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default='postgres://root:c3DFkYGF875UCTdG1hCUgx21oBdv54OG@dpg-cn6q32icn0vc73dlscqg-a/django_qr',
+#         conn_max_age=600
+#     )
+# }
 
-
-
-# Assuming DATABASES is defined as shown in your example
-# Replace 'postgresql://...' with the connection URL provided by Render
 DATABASES = {
-    'default': dj_database_url.config(
-        default='postgres://root:c3DFkYGF875UCTdG1hCUgx21oBdv54OG@dpg-cn6q32icn0vc73dlscqg-a/django_qr',
-        conn_max_age=600
-    )
+    'default':{
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres.hwkuhpjhmrkgctkpkkou',
+        'PASSWORD': '!@#Mozbygreen13',
+        'HOST': 'aws-0-us-west-1.pooler.supabase.com',
+        'PORT': '5432',
+    }
 }
-
 
 
 
