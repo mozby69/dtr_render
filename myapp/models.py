@@ -66,6 +66,13 @@ class Employee(models.Model):
     EmploymentStatus = models.CharField(max_length=15,default="Regular")
     EmpImage = models.ImageField(upload_to='emp_image/', null=True, blank=True)
   
+
+class QRList(models.Model):
+    name = models.CharField(max_length=100,null=True)
+    qr_code = models.ImageField(upload_to='qrcodes/', blank=True, null=True)
+    
+    class Meta:
+        db_table = 'qr_list'    
     
     
 
