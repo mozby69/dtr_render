@@ -17,6 +17,30 @@ class DailyRecord(models.Model):
     created_at = models.DateTimeField(default=timezone.now)  
     approveOT = models.BooleanField(default=False)
     branch_name = models.CharField(max_length=50, null=True, blank=True)
+
+
+    def to_sql(self):
+        timein = f"'{self.timein}'" if self.timein is not None else 'NULL'
+        timeout = f"'{self.timeout}'" if self.timeout is not None else 'NULL'
+        breakout = f"'{self.breakout}'" if self.breakout is not None else 'NULL'
+        breakin = f"'{self.breakin}'" if self.breakin is not None else 'NULL'
+        branch_name = f"'{self.branch_name}'" if self.branch_name is not None else 'NULL'
+        
+        return f"INSERT INTO attendance(Empname, date, timein, timeout, breakout, breakin, branch_name, created_at) VALUES " \
+               f"('{self.Empname}', '{self.date}', {timein}, {timeout}, {breakout}, {breakin}, {branch_name}, '{self.created_at.strftime('%Y-%m-%d %H:%M:%S')}');"
+
+    def to_sql_all(self):
+        timeout = f"'{self.timeout}'" if self.timeout is not None else 'NULL'
+        breakout = f"'{self.breakout}'" if self.breakout is not None else 'NULL'
+        breakin = f"'{self.breakin}'" if self.breakin is not None else 'NULL'
+
+        return f"UPDATE attendance SET " \
+               f"timeout = {timeout}, " \
+               f"breakout = {breakout}, " \
+               f"breakin = {breakin} " \
+               f"WHERE Empname = '{self.Empname}' AND date = '{self.date}' AND branch_name = '{self.branch_name}';"
+
+
     class Meta:
         db_table = 'attendance'
 

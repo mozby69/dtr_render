@@ -5,6 +5,22 @@
   {% include 'myapp/navbar.html' %}
 
 
+<style>
+    .table-container {
+        max-height: 700px;
+        overflow-y: auto; 
+    }
+    html, body{
+        margin: 0;
+        background-color: aliceblue;
+    }
+    .card-title {
+        font-size:1.2rem;
+        font-weight: bold;
+
+    }
+
+</style>
 
   <div class="content-wrapper">
     <div class="container-fluid">
@@ -28,12 +44,12 @@
                                         <i class="fa fa-plus"></i> <span>&nbsp;ADD NEW RECORD</span>
                                     </button>
 
-                                  <form method="post" action="{% url 'generate_qr_code' %}" target="_blank">
+                           <!--        <form method="post" action="{% url 'generate_qr_code' %}" target="_blank">
                                       {% csrf_token %}
                                       <button type="submit" class="btn btn-success btn-round waves-effect waves-light m-1" name="print">
                                           <i class="fa fa-print"></i> <span>&nbsp;PRINT</span>
                                       </button>
-                                  </form>
+                                  </form> -->
 
                                   <!-- 
                                     <button type="button" class="btn btn-primary btn-round waves-effect waves-light m-1" data-bs-toggle="modal" data-bs-target="#addQRModalExisting">
@@ -52,7 +68,7 @@
                              
 
             
-                            <div class="col-lg-2">
+                         <!--    <div class="col-lg-2">
                                 <div class="d-flex justify-content-end">
                                     <form action="" method="post" class="d-flex">
                                         {% csrf_token %}
@@ -61,13 +77,14 @@
                                     </form>
                                 </div>
                             </div>
-
+ -->
                         </div>
                                       
                         
 
                     </div>
 
+                  <div class="table-container card">
                     <div class="card-body">
                         <div class="table-responsive">
                             <table id="defaultdatatable" class="table table-bordered table-hover table-striped tables">
@@ -80,14 +97,21 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                              
                                   {% for qr in qr_list %}
+
                                     <tr>
 
-                                        <td>{{ qr.name}}</td>
-                                        <td>{{ qr.qr_code }}</td>
+                                        <td style="vertical-align:middle;font-size:1.3rem;">{{ qr.name}}</td>
+                                        <td><img src="{{ qr.qr_code.url }}" alt="QR Code" width="50px" heigh="50px"></td>
+
                              
                                      
-                                        <td>
+                                        <td style="vertical-align:middle;">
+
+                                        <a class="material-symbols-outlined btn btn-success" href="{% url 'user_profile' qr.id %}">
+                                        wysiwyg
+                                        </a>
                                                                                           
                                         <span class="material-symbols-outlined btn btn-primary edit-btn" data-bs-toggle="modal" data-bs-target="#updateQREmployeeModal_{{qr.id}}">
                                             edit
@@ -102,6 +126,7 @@
                                         </td>
 
                                     </tr>
+
                                       
                             
                         </div>
@@ -184,6 +209,7 @@
 
 
 
+
 <!-- ADD NEW QR Modal -->
 <div class="modal fade" id="addQRModal" tabindex="-1" aria-labelledby="addQRModal" aria-hidden="true">
   <div class="modal-dialog">
@@ -260,10 +286,19 @@
   </div>
 </div>
 
+    </tbody>
+    </table>
 
 
-
-
+</div>
+  <script>
+            $(document).ready(function() {
+                $('#defaultdatatable').DataTable({
+                    searching: true  // Enable searching
+                });
+            });
+  </script>
+          
 
 
 {% endblock content %}

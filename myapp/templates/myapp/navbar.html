@@ -6,14 +6,15 @@
 
 <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
-      <a class="navbar-brand jgclogo text-white" href="#">JGC DTR</a>
+      <a class="navbar-brand jgclogo text-white" href="{% url 'index' %}">JGC DTR</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item" style="visibility:hidden;">
-            <a class="nav-link active text-white" aria-current="page" href="#">ADD EMPLOYEE</a>
+
+          <li class="nav-item">
+            <a class="nav-link active text-white" aria-current="page" href="{% url 'export' %}">EXPORT</a>
           </li>
 
 
@@ -22,11 +23,14 @@
             <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               QR CODE
             </a>
+
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="{%url 'generate_qr_code' %}">QR RECORD</a></li>
-              <li><a class="dropdown-item" href="">QR SCANNER</a></li>
-
             </ul>
+
+
+
+
           </li>
 
      

@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from myapp.models import QRList
 from django.db import IntegrityError
@@ -11,7 +11,6 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from reportlab.pdfgen import canvas
 from django.http import FileResponse
 import io
-
 
 def generate_qr_code(request):
     qr_list = QRList.objects.all().order_by('id')
@@ -146,6 +145,14 @@ def generate_qr_code(request):
     #qr_list = QRList.objects.all()
     
     return render(request, 'myapp/generate_qr_code.html', {'qr_list': qr_list, 'query': query})
+
+
+
+
+def user_profile(request, pk):
+    qr_list = QRList.objects.all().order_by('id')
+    student = get_object_or_404(QRList, id=pk)
+    return render(request, 'myapp/employee.html', {'student': student, 'qr_list': qr_list}) 
 
 
     
