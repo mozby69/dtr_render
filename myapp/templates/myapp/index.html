@@ -30,12 +30,13 @@
     box-sizing: border-box;
     font-weight:bold;
 }
-
-
 </style>
+
+
 
   <div class="container mt-5">
     <div class="row">
+
         <div class="col-md-6">
             <div id="webcam-container">
                 <video id="webcam" width="640" height="480" autoplay alt="IF THE VIDEO IS NOT SHOWING REFRESH THE PAGE"></video>
@@ -44,27 +45,28 @@
             </div>
         </div>
 
-        <div class="col-md-6">
-            <div class="col-md-12" style="position: relative; left: 3rem;">
-                <div class="table-container card">
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table id="defaultdatatable" class="table table-bordered table-hover table-striped tables">
-                                <thead>
-                                    <tr>
-                                        <th>NAME</th>
-                                        <th>TIMEIN</th>
-                                        <th>BREAKOUT</th>
-                                        <th>BREAKIN</th>
-                                        <th>TIMEOUT</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- Your table content goes here -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+
+    <div class="col-md-6">
+    <div class="col-md-12" style="position: relative; left: 3rem;">
+       
+        <div class="table-container card">
+            <div class="card-body">
+                <div class="table-responsive">
+                     <input type="text" id="searchInput" placeholder="Search for names.." style="margin-bottom:1rem;border-radius:.4rem;padding:.4rem;float:right;border:2px solid gray;">
+                    <table id="defaultdatatable" class="table table-bordered table-hover table-striped tables">
+                        <thead>
+                            <tr>
+                                <th>NAME</th>
+                                <th>TIMEIN</th>
+                                <th>BREAKOUT</th>
+                                <th>BREAKIN</th>
+                                <th>TIMEOUT</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Your table content goes here -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -73,43 +75,71 @@
 
 
 
+    </div>
+</div>
 
 
+
+          
 
 <script>
+    $(document).ready(function() {
+        var originalData = []; // Store original table data
 
-    function QRList() {
-        $.ajax({
-            url: '{% url "display_qr_list" %}',
-            type: 'GET',
-            dataType: 'json',
-            success: function (data) {
-                var tableBody = $('#defaultdatatable tbody');
-                tableBody.empty(); // Clear previous table data
+        // Function to populate table with data
+        function populateTable(data) {
+            var tableBody = $('#defaultdatatable tbody');
+            tableBody.empty(); // Clear previous table data
 
-                data.attendances.forEach(function (attendance) {
-                    var row = $('<tr>');
-                    row.append('<td>' + attendance.name + '</td>');
-                    row.append('<td>' + attendance.timein + '</td>');
-                    row.append('<td>' + attendance.breakout + '</td>');
-                    row.append('<td>' + attendance.breakin + '</td>');
-                    row.append('<td>' + attendance.timeout + '</td>');
-                    tableBody.append(row);
-                });
-            },
-            error: function (error) {
-                console.error('Error fetching attendance data:', error);
-            }
-        });
-    }
+            data.forEach(function(attendance) {
+                var row = $('<tr>');
+                row.append('<td>' + attendance.name + '</td>');
+                row.append('<td>' + attendance.timein + '</td>');
+                row.append('<td>' + attendance.breakout + '</td>');
+                row.append('<td>' + attendance.breakin + '</td>');
+                row.append('<td>' + attendance.timeout + '</td>');
+                tableBody.append(row);
+            });
+        }
 
-    // Call ImportList initially
-    QRList();
+        // Function to perform the live search
+        function performSearch() {
+            var searchText = $('#searchInput').val().toLowerCase();
+            var filteredData = originalData.filter(function(attendance) {
+                return attendance.name.toLowerCase().includes(searchText);
+            });
+            populateTable(filteredData);
+        }
 
-    // Use setInterval to update the table every 2000 milliseconds (2 seconds)
-    setInterval(QRList, 1000);
+        // Event listener for input changes in the search box
+        $('#searchInput').on('input', performSearch);
 
+        function updateTable() {
+            $.ajax({
+                url: '{% url "display_qr_list" %}',
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    originalData = data.attendances; // Store original data
+                    populateTable(originalData); // Populate table with original data
+                    performSearch(); // Perform search after updating table
+                },
+                error: function(error) {
+                    console.error('Error fetching attendance data:', error);
+                }
+            });
+        }
+
+        // Call updateTable initially
+        updateTable();
+
+        // Use setInterval to update the table every 1000 milliseconds (1 second)
+        setInterval(updateTable, 1000);
+    });
 </script>
+
+
+
 
 
 
