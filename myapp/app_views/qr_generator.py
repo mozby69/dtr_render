@@ -8,9 +8,12 @@ from django.conf import settings
 import os
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from reportlab.pdfgen import canvas
+#from reportlab.pdfgen import canvas
 from django.http import FileResponse
 import io
+
+
+
 
 def generate_qr_code(request):
     qr_list = QRList.objects.all().order_by('id')
@@ -75,30 +78,30 @@ def generate_qr_code(request):
             return HttpResponseRedirect(request.path)
 
 
-        elif "print" in request.POST:
-            # Create a PDF document
-            buffer = io.BytesIO()
-            p = canvas.Canvas(buffer)
-            QR = QRList.objects.all()
-            p.drawString(50,820, " QR CODE")
+        # elif "print" in request.POST:
+        #     # Create a PDF document
+        #     buffer = io.BytesIO()
+        #     p = canvas.Canvas(buffer)
+        #     QR = QRList.objects.all()
+        #     p.drawString(50,820, " QR CODE")
 
            
-            y_position = 700  
-            for qr_record in QR:
-                name = qr_record.name
-                p.drawString(50, y_position, f" Name: {name}")
-                y_position -= 20
+        #     y_position = 700  
+        #     for qr_record in QR:
+        #         name = qr_record.name
+        #         p.drawString(50, y_position, f" Name: {name}")
+        #         y_position -= 20
 
-            p.showPage()
-            p.save()
-            buffer.seek(0)
+        #     p.showPage()
+        #     p.save()
+        #     buffer.seek(0)
 
-            response = FileResponse(buffer, content_type='application/pdf')
+        #     response = FileResponse(buffer, content_type='application/pdf')
 
     
-            response['Content-Disposition'] = 'inline; filename="qr_code.pdf"'
+        #     response['Content-Disposition'] = 'inline; filename="qr_code.pdf"'
 
-            return response
+        #     return response
 
 
         elif "update" in request.POST:

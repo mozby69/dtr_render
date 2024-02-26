@@ -57,7 +57,7 @@
   <div class="modal fade" id="logoutaccount" tabindex="-1" aria-labelledby="logoutaccount" aria-hidden="true">
     <div class="modal-dialog">
      
-      <form action="" method="post">
+      <form action="{% url 'logout' %}" method="post">
      
       {% csrf_token %}
       <div class="modal-content">

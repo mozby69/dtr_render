@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 import os
 import cv2
 from django.shortcuts import render
@@ -19,7 +19,25 @@ from datetime import timedelta,datetime,date,time
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.messages import get_messages
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.views import LogoutView
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.urls import reverse_lazy
 
+
+class CustomLogoutView(LogoutView):
+    next_page = reverse_lazy('login')
+
+
+def is_admin(user):
+    return user.groups.filter(name='admingroup').exists()
+
+
+@login_required(login_url='login')
+def home(request):
+    user_in_admingroup = is_admin(request.user)
+    return render(request, 'myapp/home.html', {'user_in_admingroup': user_in_admingroup})
 
 
 
@@ -374,7 +392,23 @@ def display_qr_list(request):
 
 
 
-
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user:
+                login(request, user)
+                if request.user.username == 'emb_payroll':
+                    return redirect('index_payroll')
+                else:
+                    return redirect('home')
+            
+    else:
+        form = AuthenticationForm()
+    return render(request, 'myapp/login.html', {'form': form})
 
 
 

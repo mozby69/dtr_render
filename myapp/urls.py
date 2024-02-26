@@ -5,9 +5,14 @@ from .app_views.qr_generator import generate_qr_code,user_profile
 from django.conf.urls.static import static
 from django.conf import settings
 from .app_views.export import export,export_data_afternoon
+from django.contrib.auth import views as auth_views
+from django.views.generic.base import TemplateView
 
 urlpatterns = [
-    path('', index, name="index"),
+    path('', views.login_view, name='login'),
+    path('home/', views.home, name='home'),
+    path('logout/', views.CustomLogoutView.as_view(), name='logout'),
+    path('index/', index, name="index"),
     path('display_qr_list/', display_qr_list, name='display_qr_list'),
     path('webcam_qr_code_scanner/',webcam_qr_code_scanner,name='webcam_qr_code_scanner'),
     path('fetch_messages/', fetch_messages, name='fetch_messages'),
