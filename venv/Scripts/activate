@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\VScode files\facedetection\rendeDjango2\venv"
+VIRTUAL_ENV="D:\VScode files\facedetection\dtr_qrscanner\venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

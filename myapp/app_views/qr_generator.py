@@ -60,22 +60,22 @@ def generate_qr_code(request):
                 return HttpResponse("Error occurred")
             return HttpResponseRedirect(request.path)
 
-        elif "addQRExisting" in request.POST:
-            name_existing = request.POST.get("firstname")
-            qr_image = request.FILES.get("qrimage")
+        # elif "addQRExisting" in request.POST:
+        #     name_existing = request.POST.get("firstname")
+        #     qr_image = request.FILES.get("qrimage")
 
-            # Save uploaded QR code image for existing record
-            img_path_existing = f"qrcodes_existing/{name_existing}.png"
-            with open(f"media/{img_path_existing}", "wb") as img_file:
-                for chunk in qr_image.chunks():
-                    img_file.write(chunk)
+        #     # Save uploaded QR code image for existing record
+        #     img_path_existing = f"qrcodes_existing/{name_existing}.png"
+        #     with open(f"media/{img_path_existing}", "wb") as img_file:
+        #         for chunk in qr_image.chunks():
+        #             img_file.write(chunk)
 
-            # Save record with QR code image path for existing record
-            try:
-                QRList.objects.create(name=name_existing, qr_code=img_path_existing)
-            except IntegrityError:
-                return HttpResponse("Error occurred")
-            return HttpResponseRedirect(request.path)
+        #     # Save record with QR code image path for existing record
+        #     try:
+        #         QRList.objects.create(name=name_existing, qr_code=img_path_existing)
+        #     except IntegrityError:
+        #         return HttpResponse("Error occurred")
+        #     return HttpResponseRedirect(request.path)
 
 
         # elif "print" in request.POST:
@@ -121,29 +121,13 @@ def generate_qr_code(request):
             # Redirect after the form is successfully submitted
             return redirect('generate_qr_code')
 
-        elif "search" in request.POST:
-            query = request.POST.get("searchquery", "")
-            if query:
-                student_list = QRList.objects.filter(Q(name__icontains=query))
-            else:
-                student_list = QRList.objects.all().order_by('id')
 
-            paginator = Paginator(student_list, 10)  # Reset paginator
-            page = request.GET.get('page', 1)
-
-            try:
-                student_list = paginator.page(page)
-            except PageNotAnInteger:
-                student_list = paginator.page(1)
-            except EmptyPage:
-                student_list = paginator.page(paginator.num_pages)
 
 
 
                 
-            
                 
-            return render(request, 'myapp/generate_qr_code.html', {'qr_list': qr_list, 'query': query})
+            #return render(request, 'myapp/generate_qr_code.html', {'qr_list': qr_list, 'query': query})
 
     #qr_list = QRList.objects.all()
     

@@ -1,4 +1,4 @@
-#!C:\VScode files\facedetection\rendeDjango2\venv\Scripts\python.exe
+#!D:\VScode files\facedetection\dtr_qrscanner\venv\Scripts\python.exe
 
 # http://www.python.org/doc/2.4.4/lib/module-itertools.html
 import itertools

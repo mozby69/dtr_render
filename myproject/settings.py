@@ -83,26 +83,30 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 #     }
 # }
 
-
 # DATABASES = {
-#     'default': dj_database_url.config(
-#         default='postgres://root:c3DFkYGF875UCTdG1hCUgx21oBdv54OG@dpg-cn6q32icn0vc73dlscqg-a/django_qr',
-#         conn_max_age=600
-#     )
+#     'default':{
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'postgres',
+#         'USER': 'postgres.hwkuhpjhmrkgctkpkkou',
+#         'PASSWORD': '!@#Mozbygreen13',
+#         'HOST': 'aws-0-us-west-1.pooler.supabase.com',
+#         'PORT': '5432',
+#     }
 # }
 
 DATABASES = {
     'default':{
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres.hwkuhpjhmrkgctkpkkou',
-        'PASSWORD': '!@#Mozbygreen13',
-        'HOST': 'aws-0-us-west-1.pooler.supabase.com',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'djangodb2',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '3306',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
     }
 }
-
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {

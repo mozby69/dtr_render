@@ -1,4 +1,4 @@
-#!C:\VScode files\facedetection\rendeDjango2\venv\Scripts\python.exe
+#!D:\VScode files\facedetection\dtr_qrscanner\venv\Scripts\python.exe
 from __future__ import print_function
 
 import argparse

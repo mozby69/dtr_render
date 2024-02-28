@@ -7,6 +7,30 @@
 <title>djangoapp</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+{% comment %} <script src="{% static 'js/toast.js' %}"></script> {% endcomment %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vXrUX0eqtPIKfDL+I3ufOAQ8noPgVW3i8Myz5N5L1N8MfjWVY/3RW0N,oFKjP6GyQz5W7hQzO4ocIKv8gW/Og==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+hwvlR08U4By5kpzr08ULjHy3yIS8WvQVvwez9obyXnAUkTT1P5tP5FPzyTqA9tHo4yOuRCLwMHzqUUjhA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+
+<style>
+   #error-message {
+    position: absolute;
+    top: 3.4rem;
+    left: 0; /* Adjust the left position */
+    width: 100%;
+    height: 100%;
+    display: none;
+    background-color: rgba(255, 0, 0, 0.7);
+    color: white;
+    font-size: 1.1rem;
+    text-align: left; /* Align the text to the left */
+    padding: 12rem 7rem; /* Adjust padding for better appearance */
+    box-sizing: border-box;
+    font-weight:bold;
+}
+</style>
+
 </head>
 
 
@@ -34,3 +58,20 @@
  
 </body>
 </html>
+
+<script>
+      toastr.options = {
+            positionClass: 'toast-top-left',
+            preventDuplicates: true,
+            progressBar: true,
+            showDuration: 1000,
+            hideDuration: 1500,
+            timeOut: 5000,
+            extendedTimeOut: 1000,
+            messageClass: 'toastSize',
+        };
+
+    $(document).ready(function() {
+        toastr.success('Welcome to the website!', 'Simple Toast');
+      });
+  </script>

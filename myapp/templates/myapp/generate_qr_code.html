@@ -4,23 +4,7 @@
 {% block content %}
   {% include 'myapp/navbar.html' %}
 
-
-<style>
-    .table-container {
-        max-height: 700px;
-        overflow-y: auto; 
-    }
-    html, body{
-        margin: 0;
-        background-color: aliceblue;
-    }
-    .card-title {
-        font-size:1.2rem;
-        font-weight: bold;
-
-    }
-
-</style>
+  <link href="{% static 'css/qr_page.css' %}" rel="stylesheet">
 
   <div class="content-wrapper">
     <div class="container-fluid">
@@ -55,6 +39,8 @@
                                     <button type="button" class="btn btn-primary btn-round waves-effect waves-light m-1" data-bs-toggle="modal" data-bs-target="#addQRModalExisting">
                                       <i class="fa fa-plus"></i> <span>&nbsp;ADD EXISTING RECORD</span>
                                     </button> -->
+
+
 
                                 </div>
 
@@ -109,7 +95,7 @@
                                      
                                         <td style="vertical-align:middle;">
 
-                                        <a class="material-symbols-outlined btn btn-success" href="{% url 'user_profile' qr.id %}">
+                                        <a class="material-symbols-outlined btn btn-success" data-bs-toggle="modal" data-bs-target="#view_qr_{{qr.id}}">
                                         wysiwyg
                                         </a>
                                                                                           
@@ -165,7 +151,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary" name="update" data-user-id="{{ qr.id }}">update student</button>
+          <button type="submit" class="btn btn-primary" name="update" data-user-id="{{ qr.id }}">Update Name</button>
         </div>
       </div>
     </form>
@@ -173,6 +159,59 @@
   </div>
 
 
+
+
+
+<!-- QR MODAL VIEW -->
+<div class="modal fade" id="view_qr_{{ qr.id }}" tabindex="-1" aria-labelledby="view_qr_{{qr.id}}" aria-hidden="true">
+    <div class="modal-dialog">
+      <form action="" method="post">
+        {% csrf_token %}
+   
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5"></h1>
+
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" name="id" value="{{qr.id}}">
+  
+          <div class="container" style="display: flex; flex-direction: column; align-items: center;">
+            <div class="image-container">
+                <!-- <img src="{{qr.qr_code.url }}" alt="profile" style="border-radius:10rem; border:1px solid rebeccapurple; width:5rem; height:5rem;"> -->
+
+            </div>
+
+            <div class="title-qr">
+              <h2 style="position:relative;top:1.5rem;">{{ qr.name }}</h2>
+            </div>
+
+            <div class="image-container2" style="text-align: center;">
+              <img src="{{ qr.qr_code.url }}" alt="QR Code" width="340px" height="340px">
+              <a class="qr_button" href="{{ qr.qr_code.url }}" download="qr_code_image.png">
+                  <button  type="button" style="margin-bottom:1rem;border-radius: .5rem;padding: .7rem 1rem;background-color: #5EA061;color:#FFFFFF;font-size:1.2rem;font-weight:bold;border:none;"><img style="height:1.7rem;margin-right:1rem;" src="{% static 'icons/cloud-computing.png' %}">Download QR</button>
+              </a>
+          </div>
+          
+          
+        </div>
+        
+
+      
+          
+
+      
+     
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+       
+        </div>
+      </div>
+    </form>
+    </div>
+  </div>
 
 
 
@@ -291,10 +330,11 @@
 
 
 </div>
+
   <script>
             $(document).ready(function() {
                 $('#defaultdatatable').DataTable({
-                    searching: true  // Enable searching
+                    searching: true  
                 });
             });
   </script>
