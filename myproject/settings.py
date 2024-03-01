@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'myapp.middleware.CurrentTimeMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -83,30 +84,30 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 #     }
 # }
 
-# DATABASES = {
-#     'default':{
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'postgres',
-#         'USER': 'postgres.hwkuhpjhmrkgctkpkkou',
-#         'PASSWORD': '!@#Mozbygreen13',
-#         'HOST': 'aws-0-us-west-1.pooler.supabase.com',
-#         'PORT': '5432',
-#     }
-# }
-
 DATABASES = {
     'default':{
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'djangodb2',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '3306',
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-        },
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres.hwkuhpjhmrkgctkpkkou',
+        'PASSWORD': '!@#Mozbygreen13',
+        'HOST': 'aws-0-us-west-1.pooler.supabase.com',
+        'PORT': '5432',
     }
 }
+
+# DATABASES = {
+#     'default':{
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'djangodb2',
+#         'USER': 'root',
+#         'PASSWORD': '',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#         'OPTIONS': {
+#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+#         },
+#     }
+# }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -144,7 +145,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [
-   os.path.join(BASE_DIR, "static")
+   os.path.join(BASE_DIR, "static"),
+   os.path.join(BASE_DIR, 'global_assets'),
 ]
 
 

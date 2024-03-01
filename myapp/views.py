@@ -67,21 +67,17 @@ def webcam_qr_code_scanner(request):
         current_time = datetime.now()
 
         if decoded_objects:
-            # QR code scanned successfully
             name = decoded_objects[0].data.decode('utf-8')
             prac_time = current_time.strftime("%H:%M")
             qr_existing = Employee.objects.filter(EmpCode=name).first()
             formatted_name = f"{qr_existing.Firstname} {qr_existing.Lastname}" if qr_existing else name
 
- 
-
             # FOR TIMEIN
-            if "03:00" <= prac_time <= "10:59":
+            if "03:00" <= prac_time <= "09:59":
                 existing_entry = DailyRecord.objects.filter(Empname=formatted_name,
                                                                     date=current_time.date()).first()
                 if existing_entry is None:
                     insertData(name, current_time, request)
-                    # Archive.objects.filter(name=name,date=current_time.date()).create(name=formatted_name,timein_names=name,timein_timestamps=current_time)
                     messages.success(request, f'Timein Successfully! - {formatted_name}', extra_tags='timein')
                     return HttpResponseRedirect(request.path)
 
@@ -94,7 +90,7 @@ def webcam_qr_code_scanner(request):
                     return HttpResponseRedirect(request.path)
 
             # FOR BREAKOUT
-            if "12:00" <= prac_time <= "13:00" and temporay.objects.filter(Empname=formatted_name,
+            if "11:30" <= prac_time <= "12:30" and temporay.objects.filter(Empname=formatted_name,
                                                                           timein_names__isnull=False,
                                                                           breakout_names__isnull=True,
                                                                           date=current_time.date()).exists():
@@ -114,7 +110,7 @@ def webcam_qr_code_scanner(request):
                     return HttpResponseRedirect(request.path)
 
             # FOR BREAKIN
-            if "12:00" <= prac_time <= "14:00" and temporay.objects.filter(Empname=formatted_name,
+            if "11:30" <= prac_time <= "13:00" and temporay.objects.filter(Empname=formatted_name,
                                                                           timein_names__isnull=False,
                                                                           breakout_names__isnull=False,
                                                                           breakin_names__isnull=True,
@@ -132,7 +128,7 @@ def webcam_qr_code_scanner(request):
                     return HttpResponseRedirect(request.path)
 
             # IF BREAKIN IS ALREADY INSERTED
-            if "12:00" <= prac_time <= "15:00" and temporay.objects.filter(Empname=formatted_name,
+            if "11:30" <= prac_time <= "13:00" and temporay.objects.filter(Empname=formatted_name,
                                                                           timein_names__isnull=False,
                                                                           breakout_names__isnull=False,
                                                                           breakin_names__isnull=False,
@@ -148,7 +144,7 @@ def webcam_qr_code_scanner(request):
                     return HttpResponseRedirect(request.path)
 
             # FOR TIMEOUT
-            if "15:00" <= prac_time <= "23:59" and temporay.objects.filter(Empname=formatted_name,
+            if "15:30" <= prac_time <= "23:59" and temporay.objects.filter(Empname=formatted_name,
                                                                           timein_names__isnull=False,
                                                                           breakout_names__isnull=False,
                                                                           breakin_names__isnull=False,
@@ -197,7 +193,7 @@ def webcam_qr_code_scanner(request):
             # IF HALF DAY IN THE AFTERNOON - BREAKIN
             qr_existing = Employee.objects.filter(EmpCode=name).first()
             formatted_name = f"{qr_existing.Firstname} {qr_existing.Lastname}" if qr_existing else name
-            if "11:00" <= prac_time <= "23:59":
+            if "10:00" <= prac_time <= "13:00":
                 existing_entry = DailyRecord.objects.filter(Empname=formatted_name,
                                                                     date=current_time.date()).first()
                 if existing_entry is None:

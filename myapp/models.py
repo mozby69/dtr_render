@@ -3,7 +3,38 @@ from django.utils import timezone
 from datetime import date,datetime
 
 
+
+
+#New Models
+class Branches(models.Model):
+    BranchCode = models.CharField(max_length=20,unique=True,primary_key=True)
+    Company = models.CharField(max_length=50)
+    Location = models.CharField(max_length=50)
+    Employees = models.CharField(max_length=10)
+    BranchImage = models.ImageField(upload_to='branch_image/', null=True, blank=True)
+
+
+class Employee(models.Model):
+    EmpCode = models.CharField(max_length=20,unique=True,primary_key=True)
+    BranchCode = models.ForeignKey(Branches, on_delete = models.CASCADE, to_field = 'BranchCode', null = True)
+    Firstname = models.CharField(max_length=20)
+    Middlename = models.CharField(max_length=20)
+    Lastname = models.CharField(max_length=20)
+    DateofBirth = models.DateField(default=date(2000, 1, 1), null=True)
+    BloodType = models.CharField(max_length=3, default="N/D")
+    Gender = models.CharField(max_length=8, default="Male")
+    CivilStatus = models.CharField(max_length=10, default="N/A")
+    Address = models.CharField(max_length=50, default="N/D")
+    Position = models.CharField(max_length=50)
+    Department = models.CharField(max_length=50, default="N/A", null=True, blank=True)
+    EmployementDate = models.DateField(default=date(2000, 1, 1))
+    EmploymentStatus = models.CharField(max_length=15,default="Regular")
+    EmpImage = models.ImageField(upload_to='emp_image/', null=True, blank=True)
+
+
+
 class DailyRecord(models.Model):
+    EmpCode = models.ForeignKey(Employee, on_delete=models.CASCADE, to_field='EmpCode', null=True)
     Empname = models.CharField(max_length=50, default = 'Unknown')
     date = models.DateField(default=date.today)
     timein = models.TimeField(blank=True, null=True)
@@ -47,7 +78,7 @@ class DailyRecord(models.Model):
 
 
 class temporay(models.Model):
-    employee_number = models.CharField(max_length=100)
+    EmpCode = models.ForeignKey(Employee, on_delete=models.CASCADE, to_field='EmpCode', null=True)
     Empname = models.CharField(max_length=50, default = 'Unknown')
     date = models.DateField(default=date.today)
     timein_names = models.CharField(max_length=100,null=True,blank=True)
@@ -65,30 +96,9 @@ class temporay(models.Model):
         db_table = 'temporay'
 
 
-#New Models
-class Branches(models.Model):
-    BranchCode = models.CharField(max_length=20,unique=True,primary_key=True)
-    Company = models.CharField(max_length=50)
-    Location = models.CharField(max_length=50)
-    Employees = models.CharField(max_length=10)
-    BranchImage = models.ImageField(upload_to='branch_image/', null=True, blank=True)
 
-class Employee(models.Model):
-    EmpCode = models.CharField(max_length=20,unique=True,primary_key=True)
-    BranchCode = models.ForeignKey(Branches, on_delete = models.CASCADE, to_field = 'BranchCode', null = True)
-    Firstname = models.CharField(max_length=20)
-    Middlename = models.CharField(max_length=20)
-    Lastname = models.CharField(max_length=20)
-    DateofBirth = models.DateField(default=date(2000, 1, 1), null=True)
-    BloodType = models.CharField(max_length=3, default="N/D")
-    Gender = models.CharField(max_length=8, default="Male")
-    CivilStatus = models.CharField(max_length=10, default="N/A")
-    Address = models.CharField(max_length=50, default="N/D")
-    Position = models.CharField(max_length=50)
-    Department = models.CharField(max_length=50, default="N/A", null=True, blank=True)
-    EmployementDate = models.DateField(default=date(2000, 1, 1))
-    EmploymentStatus = models.CharField(max_length=15,default="Regular")
-    EmpImage = models.ImageField(upload_to='emp_image/', null=True, blank=True)
+
+
   
 
 class QRList(models.Model):
@@ -99,8 +109,6 @@ class QRList(models.Model):
         db_table = 'qr_list'    
     
     
-
-   
 
 class RequestForm(models.Model):
     FormID = models.AutoField(primary_key=True)
@@ -113,6 +121,8 @@ class RequestForm(models.Model):
     Remarks = models.CharField(max_length = 100)
     created_at = models.DateTimeField(default=timezone.now)  
     date = models.DateField(default=date(2000, 1, 1))
+
+
 
 class AttendanceCount(models.Model):
     EmpCode = models.ForeignKey(Employee, on_delete=models.CASCADE, to_field='EmpCode', null=True)
