@@ -12,11 +12,16 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
+import environ
+
+
 # import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
+env = environ.Env()
+environ.Env.read_env()
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -84,16 +89,16 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    'default':{
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres.hwkuhpjhmrkgctkpkkou',
-        'PASSWORD': '!@#Mozbygreen13',
-        'HOST': 'aws-0-us-west-1.pooler.supabase.com',
-        'PORT': '5432',
-    }
-}
+# DATABASES = {
+#     'default':{
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'postgres',
+#         'USER': 'postgres.hwkuhpjhmrkgctkpkkou',
+#         'PASSWORD': '!@#Mozbygreen13',
+#         'HOST': 'aws-0-us-west-1.pooler.supabase.com',
+#         'PORT': '5432',
+#     }
+# }
 
 # DATABASES = {
 #     'default':{
@@ -108,6 +113,11 @@ DATABASES = {
 #         },
 #     }
 # }
+
+DATABASES = {
+    'default': dj_database_url.parse(env('DATABASE_URL'))
+}
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
